@@ -54,12 +54,11 @@ public class RuleUtilsTest {
                 "    println(id + ':' + 10)\n" +
                 "}";
 
-       // String demoScript = "def hello(language) {return \"Hello $language\"}";
-        Object v = RuleUtils.executeRule("name", script, params);
+        // String demoScript = "def hello(language) {return \"Hello $language\"}";
+        Object v = RuleUtils.executeRule(script, "execute", params);
 
         System.out.println(v);
     }
-
 
 
 }

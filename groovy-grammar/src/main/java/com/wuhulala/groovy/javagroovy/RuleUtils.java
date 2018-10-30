@@ -60,7 +60,7 @@ public class RuleUtils {
     }
 
 
-    public static Object executeRule(String ruleName, String ruleScript, Object... args) throws ScriptException, NoSuchMethodException {
+    public static Object executeRule(String ruleScript, String methodName, Object... args) throws ScriptException, NoSuchMethodException {
         ScriptEngineManager factory = new ScriptEngineManager();
 
         ScriptEngine engine = factory.getEngineByName("groovy");
@@ -69,7 +69,7 @@ public class RuleUtils {
 
         Invocable inv = (Invocable) engine;
 
-        return inv.invokeFunction("execute", args);
+        return inv.invokeFunction(methodName, args);
     }
 
 }
