@@ -1,5 +1,6 @@
 package com.wuhulala.groovy.javagroovy;
 
+import com.wuhulala.groovy.util.Md5Utils;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
@@ -11,6 +12,8 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 0_0 o^o
@@ -59,17 +62,23 @@ public class RuleUtils {
         return shell.evaluate(runShell);
     }
 
+    public static Map<String, ScriptEngine> scriptEngineMap = new ConcurrentHashMap<>();
 
     public static Object executeRule(String ruleScript, String methodName, Object... args) throws ScriptException, NoSuchMethodException {
-        ScriptEngineManager factory = new ScriptEngineManager();
 
-        ScriptEngine engine = factory.getEngineByName("groovy");
-
-        engine.eval(ruleScript);
-
+        String scriptKey = Md5Utils.hash(ruleScript);
+        ScriptEngine engine = scriptEngineMap.get(scriptKey);
+        if(engine == null) {
+            ScriptEngineManager factory = new ScriptEngineManager();
+            engine = factory.getEngineByName("groovy");
+            engine.eval(ruleScript);
+            scriptEngineMap.put(scriptKey, engine);
+        }
         Invocable inv = (Invocable) engine;
 
         return inv.invokeFunction(methodName, args);
     }
+
+
 
 }

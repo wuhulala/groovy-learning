@@ -3,6 +3,7 @@ package com.wuhulala.groovy.javagroovy;
 import groovy.lang.Binding;
 import org.junit.Test;
 
+import javax.script.ScriptException;
 import java.util.Objects;
 
 /**
@@ -51,13 +52,38 @@ public class RuleUtilsTest {
         String script = "def x = 10\n" +
                 "def execute(Object... params) {\n" +
                 "    String id = params[0]\n" +
-                "    println(id + ':' + 10)\n" +
+                "    //println(id + ':' + 10)\n" +
                 "}";
 
         // String demoScript = "def hello(language) {return \"Hello $language\"}";
-        Object v = RuleUtils.executeRule(script, "execute", params);
+        RuleUtils.executeRule(script, "execute", params);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10; i++) {
+            Object v = RuleUtils.executeRule(script, "execute", params);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+        //System.out.println(v);
+    }
 
-        System.out.println(v);
+    @Test
+    public void testCompositeIndex() throws ScriptException, NoSuchMethodException {
+        String script = "import groovy.json.JsonOutput\n" +
+                "\n" +
+                "class Score{\n" +
+                "    String type\n" +
+                "    int value\n" +
+                "}\n" +
+                "def calc(String type, int value){\n" +
+                "    def result = new Score()\n" +
+                "    result.type = type\n" +
+                "    result.value = value\n" +
+                "    return JsonOutput.toJson(result) \n" +
+                "}";
+
+        Object result = RuleUtils.executeRule(script, "calc", "wuhulala", 21);
+
+        System.out.println(result);
     }
 
 
