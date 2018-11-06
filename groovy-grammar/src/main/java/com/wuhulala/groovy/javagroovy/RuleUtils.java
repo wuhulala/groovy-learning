@@ -64,11 +64,16 @@ public class RuleUtils {
 
     public static Map<String, ScriptEngine> scriptEngineMap = new ConcurrentHashMap<>();
 
+    public static Object executeRuleByDefault(String ruleScript, Object... args) throws ScriptException, NoSuchMethodException {
+        return executeRule(ruleScript, "main", args);
+    }
+
+
     public static Object executeRule(String ruleScript, String methodName, Object... args) throws ScriptException, NoSuchMethodException {
 
         String scriptKey = Md5Utils.hash(ruleScript);
         ScriptEngine engine = scriptEngineMap.get(scriptKey);
-        if(engine == null) {
+        if (engine == null) {
             ScriptEngineManager factory = new ScriptEngineManager();
             engine = factory.getEngineByName("groovy");
             engine.eval(ruleScript);
@@ -78,7 +83,6 @@ public class RuleUtils {
 
         return inv.invokeFunction(methodName, args);
     }
-
 
 
 }

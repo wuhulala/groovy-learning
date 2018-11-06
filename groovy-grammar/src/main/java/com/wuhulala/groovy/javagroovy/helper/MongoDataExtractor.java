@@ -17,7 +17,7 @@ public class MongoDataExtractor implements DataExtractor {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public Object doExtract(String script) {
+    public Object extract(String script) {
         return mongoTemplate.executeCommand(script);
     }
 }

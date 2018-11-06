@@ -16,9 +16,16 @@ public class DataProvider {
 
     private String id;
 
+    /**
+     * 数据源类型
+     *
+     * mongo/oracle/mysql/excel/
+     */
     private String type;
 
     private String script;
+
+    // 添加一步后置处理
 
 
 

@@ -25,7 +25,7 @@ public class MongoDataExtractorTest {
     @Test
     public void doExtract() throws Exception {
         String script = "{'find':'user'}";
-        Object result = mongoDataExtractor.doExtract(script);
+        Object result = mongoDataExtractor.extract(script);
         System.out.println(result);
     }
 
