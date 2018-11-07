@@ -27,7 +27,7 @@ public class DataProvider {
 
     // 添加一步后置处理
 
-
+    private String postProcessor;
 
 
 }

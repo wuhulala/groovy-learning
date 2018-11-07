@@ -15,20 +15,21 @@ public abstract class AbstractDataExtractor implements DataExtractor {
     private Map<String, Object> params;
 
     @Override
-    public Object extract(String script) {
+    public Object extract(String script, Class clazz) {
         String realScript = doParse(script, params);
-        return doExtract(realScript);
+        return doExtract(realScript, clazz);
     }
 
     /**
      * 执行逻辑
      *
      * @param script
+     * @param clazz
      * @return
      */
-    public abstract Object doExtract(String script);
+    public abstract Object doExtract(String script, Class clazz);
 
-    private String doParse(String script, Map<String, Object> params) {
+    public String doParse(String script, Map<String, Object> params) {
         // 替换script变量
         // params = {user_id=1}
         // select * from user where user_id = ?;

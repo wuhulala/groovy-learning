@@ -16,5 +16,5 @@ public interface DataExtractor {
      * @param script 动态查询脚本
      * @return 返回数据集
      */
-    Object extract(String script);
+    Object extract(String script, Class clazz);
 }

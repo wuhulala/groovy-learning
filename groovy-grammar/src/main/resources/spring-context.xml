@@ -13,6 +13,8 @@
 	<!-- mongoDB 配置 -->
 	<import resource="classpath:spring-mongo.xml"/>
 
+	<import resource="classpath:spring-jdbc.xml"/>
+
 	<bean id="mongoDataExtractor" class="com.wuhulala.groovy.javagroovy.helper.MongoDataExtractor">
 		<property name="mongoTemplate" ref="mongoTemplate"/>
 	</bean>

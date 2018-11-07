@@ -3,6 +3,8 @@ package com.wuhulala.groovy.javagroovy.helper;
 import lombok.Data;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.util.Map;
+
 /**
  * 0_0 o^o
  *
@@ -12,12 +14,18 @@ import org.springframework.data.mongodb.core.MongoTemplate;
  * @since v1.0<br>
  */
 @Data
-public class MongoDataExtractor implements DataExtractor {
+public class MongoDataExtractor extends AbstractDataExtractor {
 
     private MongoTemplate mongoTemplate;
 
+
     @Override
-    public Object extract(String script) {
+    public String doParse(String script, Map<String, Object> params) {
+        return super.doParse(script, params);
+    }
+
+    @Override
+    public Object doExtract(String script, Class clazz) {
         return mongoTemplate.executeCommand(script);
     }
 }
